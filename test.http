@@ -1,0 +1,53 @@
+@region = eu-west-1
+@start_url = https://<sso>.awsapps.com/start
+@base_url = https://oidc.{{region}}.amazonaws.com
+
+### register glient
+POST {{base_url}}/client/register HTTP/1.1
+Content-type: application/json
+
+{
+    "clientName": "98765rfghjk",
+    "clientType": "public",
+    "scopes": [ "sso:account:access" ]
+}
+
+@client_id = <client_id>
+@client_secret = <client_secret>
+
+### authorize client on device
+POST {{base_url}}/device_authorization HTTP/1.1
+Content-type: application/json
+
+{
+    "clientId": "{{client_id}}",
+    "clientSecret": "{{client_secret}}",
+    "startUrl": "{{start_url}}"
+}
+
+@device_code = <device_code>
+
+### get access token
+POST {{base_url}}/token HTTP/1.1
+Content-type: application/json
+
+{
+    "clientId": "{{client_id}}",
+    "clientSecret": "{{client_secret}}",
+    "deviceCode": "{{device_code}}",
+    "grantType": "urn:ietf:params:oauth:grant-type:device_code"
+}
+
+@access_token = <access_token>
+@refresh_token = <refresh>
+
+### refresh token
+POST {{base_url}}/token HTTP/1.1
+Content-type: application/json
+
+{
+    "clientId": "{{client_id}}",
+    "clientSecret": "{{client_secret}}",
+    "refreshToken": "{{refresh_token}}",
+    "grantType": "refresh_token"
+}

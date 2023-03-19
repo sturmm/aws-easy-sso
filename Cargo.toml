@@ -1,0 +1,26 @@
+[package]
+name = "aws-easy-sso"
+version = "0.1.0"
+edition = "2021"
+license = "GNU GPLv3"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+anyhow = "^1.0.69"
+# async-trait = "0.1.64"
+aws-config = "0.54.1"
+aws-sdk-sso = "^0.24.0"
+aws-sdk-ssooidc = "^0.24.0"
+aws-types = "0.54.1"
+chrono = "0.4.23"
+clap = { version = "4.1.8", features = ["derive", "env"] }
+directories = "4.0.1"
+inquire = "^0.5.3"
+open = "3.2.0"
+rust-crypto = "0.2.36"
+rust-ini = "0.18.0"
+serde = { version = "1.0.152",  features = ["derive"] }
+serde_json = "1.0.93"
+tokio = { version = "1", features = ["full"] }
+# url = "2.3.1" # 
