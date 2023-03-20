@@ -2,7 +2,11 @@
 
 <img src="doc/demo.gif" width="500">
 
-`aws-easy-sso` is a simple tool to login to your AWS accounts using SSO. So of course it just works if you have [configured SSO in you organization](https://aws.amazon.com/de/iam/identity-center/). For personal learning, the tool is written in Rust.
+`aws-easy-sso` is a simple tool to login to your AWS accounts using SSO. So of course it just works if you have [configured SSO in you organization](https://aws.amazon.com/de/iam/identity-center/). 
+
+## Features
+
+The tool uses the SSO and OIDC SDK to fetch available accounts and roles for your login and appends the [session and profile configuration](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-sso.html) to your `~/.aws/config`. It also places the authentication information it used itself in the `~/.aws/sso/cache` directory. These cached sessions are used by the newer credential provider implementations of AWS SDKs. The tool also supports usage of multiple sso sessions (combinations of `sso_start_url` and `sso_region`). For personal learning, the tool is written in Rust.
 
 ## Installation
 
