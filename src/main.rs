@@ -5,7 +5,8 @@ use aws_types::region::Region;
 use clap::Parser;
 use directories::UserDirs;
 use inquire::{Select, Text};
-use std::path::PathBuf;
+use std::path::{PathBuf, Path};
+use std::fs;
 
 pub mod aws;
 pub mod config;
@@ -46,7 +47,7 @@ async fn main() -> Result<(), anyhow::Error> {
     let user_dirs = UserDirs::new().expect("Could not resolve user HOME.");
     let home_dir = user_dirs.home_dir();
 
-    let config_dir = home_dir.join(".awssors");
+    let config_dir = get_config_dir(home_dir)?;
     let aws_config_dir = home_dir.join(".aws");
 
     let sso_config = get_sso_config(&config_dir, &args)?;
@@ -75,9 +76,6 @@ async fn main() -> Result<(), anyhow::Error> {
         .await?;
     let selected_role = Select::new("Select role:", roles).prompt()?;
 
-    // let credentials_service = CredentialsService::new(&aws_config_dir, &config);
-    // credentials_service.get_sso_credentials(&selected_account.account_id, &selected_role, session_name.as_str(), &access_token).await?;
-
     let profile_name = aws_config_service.create_or_update_profile(
         &selected_account.account_id,
         &selected_account.account_name,
@@ -90,6 +88,15 @@ async fn main() -> Result<(), anyhow::Error> {
     println!(r#"export AWS_PROFILE="{}""#, &profile_name);
 
     Ok(())
+}
+
+fn get_config_dir(home_dir: &Path) -> Result<PathBuf> {
+    let config_dir = home_dir.join(".awseasysso");
+    if !config_dir.exists() {
+        fs::create_dir_all(&config_dir)?;
+    }
+
+    Ok(config_dir)
 }
 
 fn get_sso_config(config_dir: &PathBuf, args: &Args) -> Result<SsoConfig> {
