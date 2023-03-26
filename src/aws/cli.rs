@@ -3,13 +3,13 @@ use ini::Ini;
 use std::path::{Path, PathBuf};
 
 pub struct AwsCliConfigService {
-    config_dir: PathBuf
+    config_file: PathBuf
 }
 
 impl AwsCliConfigService {
 
-    pub fn new(config_dir: &Path) -> Self {
-        Self { config_dir: config_dir.to_path_buf() }
+    pub fn new(config_file: &Path) -> Self {
+        Self { config_file: config_file.to_path_buf() }
     }
 
     pub fn create_or_update_profile(
@@ -24,8 +24,7 @@ impl AwsCliConfigService {
         let session_section_name = format!("easy-sso-session {}", &session_name);
         let profile_name = format!("{session_name}:{role_name}@{account_name}");
         let profile_section_name = format!("profile {}", &profile_name);
-        let config_path = self.config_dir.join("config");
-        let mut config = Ini::load_from_file(&config_path)?;
+        let mut config = Ini::load_from_file(&self.config_file)?;
 
         config.set_to(Some(&session_section_name), String::from("sso_region") , String::from(sso_region));
         config.set_to(Some(&session_section_name), String::from("sso_start_url") , String::from(start_url));
@@ -37,7 +36,7 @@ impl AwsCliConfigService {
         config.set_to(Some(&profile_section_name), String::from("region"), String::from(sso_region));
         config.set_to(Some(&profile_section_name), String::from("output"), String::from("json"));
         
-        config.write_to_file(config_path)?;
+        config.write_to_file(&self.config_file)?;
 
         Ok(profile_name)
     }

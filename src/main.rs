@@ -5,11 +5,13 @@ use aws_types::region::Region;
 use clap::Parser;
 use directories::UserDirs;
 use inquire::{Select, Text};
+use script_writer::write_script;
 use std::path::{PathBuf, Path};
 use std::fs;
 
 pub mod aws;
 pub mod config;
+pub mod script_writer;
 pub mod utils;
 
 /// Improves handling of aws sso on the console by providing a UX 
@@ -32,6 +34,9 @@ struct Args {
     /// Configure new session from the given sso_region.
     #[arg(long, requires="start_url", default_value = None)]
     sso_region: Option<String>,
+
+    #[arg(long, env, default_value = None)]
+    aws_config: Option<PathBuf>,
 }
 
 impl Args {
@@ -49,13 +54,14 @@ async fn main() -> Result<(), anyhow::Error> {
 
     let config_dir = get_config_dir(home_dir)?;
     let aws_config_dir = home_dir.join(".aws");
+    let aws_config_file = aws_config_dir.join("config");
 
     let sso_config = get_sso_config(&config_dir, &args)?;
 
     let config = aws_config::SdkConfig::builder()
         .region(Region::new(sso_config.region.clone()))
         .build();
-    let aws_config_service = AwsCliConfigService::new(&aws_config_dir);
+    let aws_config_service = AwsCliConfigService::new(&aws_config_file);
     let account_info_provider = AccountInfoProvider::new(&config);
 
     let session_name = session_name(&sso_config.start_url.as_str());
@@ -85,7 +91,7 @@ async fn main() -> Result<(), anyhow::Error> {
         &sso_config.region,
     )?;
 
-    println!(r#"export AWS_PROFILE="{}""#, &profile_name);
+    write_script(&config_dir, &profile_name)?;
 
     Ok(())
 }

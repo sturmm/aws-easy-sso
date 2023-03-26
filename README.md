@@ -11,7 +11,7 @@ The tool uses the SSO and OIDC SDK to fetch available accounts and roles for you
 ## Installation
 
 ### Build: 
-```
+``` bash
 $ git clone https://github.com/sturmm/aws-easy-sso.git
 $ cd aws-easy-sso
 $ cargo build --release
@@ -19,14 +19,23 @@ $ cargo build --release
 
 ### Export to PATH:
 #### Zsh:
-```
-$ echo "path+=('$(pwd)/target/release')" >> ~/.zshrc
+``` bash
+$ echo "path+=('$(pwd)/target/release/bin')" >> ~/.zshrc
+$ # To allow the program to export variables to the 'outer' env, 
+$ # the actual scripts need to be sourced
+$ echo "alias aws-easy-sso="source _aws-easy-sso"" >> ~/.zshrc
 ```
 
 #### bash:
-```
+``` bash
 $ echo "PATH=$PATH:$(pwd)/target/release" >> ~/.bash_profile
+$ # To allow the program to export variables to the 'outer' env, 
+$ # the actual scripts need to be sourced
+$ echo "alias aws-easy-sso="source _aws-easy-sso"" >> ~/.bashrc
 ```
+
+### Limitations
+Windows is no supported currently.
 
 ## See also
 There are plenty of alternatives that worked for me in the past:
