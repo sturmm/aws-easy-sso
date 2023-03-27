@@ -28,7 +28,7 @@ $ echo "alias aws-easy-sso="source _aws-easy-sso"" >> ~/.zshrc
 
 #### bash:
 ``` bash
-$ echo "PATH=$PATH:$(pwd)/target/release" >> ~/.bash_profile
+$ echo "PATH=$PATH:$(pwd)/target/release/bin" >> ~/.bash_profile
 $ # To allow the program to export variables to the 'outer' env, 
 $ # the actual scripts need to be sourced
 $ echo "alias aws-easy-sso="source _aws-easy-sso"" >> ~/.bashrc
