@@ -7,7 +7,7 @@ use directories::UserDirs;
 use inquire::{Select, Text};
 use script_writer::write_script;
 use std::path::{PathBuf, Path};
-use std::fs;
+use std::{fs, env};
 
 pub mod aws;
 pub mod config;
@@ -91,7 +91,11 @@ async fn main() -> Result<(), anyhow::Error> {
         &sso_config.region,
     )?;
 
-    write_script(&config_dir, &profile_name)?;
+    if let Ok(_) = env::var("AWS_EASY_SSO_SOURCING_MODE") {
+        write_script(&config_dir, &profile_name)?;
+    } else {
+        println!("export AWS_PROFILE={}", &profile_name);
+    }
 
     Ok(())
 }
