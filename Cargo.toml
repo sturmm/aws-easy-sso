@@ -5,7 +5,6 @@ description = "CLI tool to make AWS SSO more convinient."
 authors = ["Martin Sturm", "Martin Sturm <noreply@martin-sturm.cloud>"]
 edition = "2021"
 license = "GNU GPLv3"
-license-file = "LICENSE"
 homepage = "https://github.com/sturmm/aws-easy-sso"
 repository = "https://github.com/sturmm/aws-easy-sso"
 keywords = ["aws", "sso", "cli"]
