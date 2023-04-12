@@ -34,9 +34,6 @@ struct Args {
     /// Configure new session from the given sso_region.
     #[arg(long, requires="start_url", default_value = None)]
     sso_region: Option<String>,
-
-    #[arg(long, env, default_value = None)]
-    aws_config: Option<PathBuf>,
 }
 
 impl Args {
