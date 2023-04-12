@@ -16,7 +16,7 @@ fn main() -> Result<(), std::io::Error> {
     let script_file = dest_bin_path.join(TARGET_SCRIPT_NAME);
     fs::write(
         &script_file,
-        format!("#!/bin/false\n\nAWS_EASY_SSO_SOURCING_MODE=true aws-easy-sso-cli\n. ~/.awseasysso/export_profile")
+        format!("#!/bin/false\n\nAWS_EASY_SSO_SOURCING_MODE=true aws-easy-sso-cli $@\n. ~/.awseasysso/export_profile")
     )?;
 
     let mut perms = fs::metadata(&script_file)?.permissions();
