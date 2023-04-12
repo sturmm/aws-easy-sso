@@ -20,14 +20,14 @@ $ cargo install aws-easy-sso
 ``` bash
 # To allow the program to export variables to the 'outer' env, 
 # the actual scripts need to be sourced
-$ echo "alias aws-easy-sso="source _aws-easy-sso"" >> ~/.zshrc
+$ echo 'alias aws-easy-sso="source _aws-easy-sso"' >> ~/.zshrc
 ```
 
 #### bash:
 ``` bash
 # To allow the program to export variables to the 'outer' env, 
 # the actual scripts need to be sourced
-$ echo "alias aws-easy-sso="source _aws-easy-sso"" >> ~/.bashrc
+$ echo 'alias aws-easy-sso="source _aws-easy-sso"' >> ~/.bashrc
 ```
 
 ### Limitations
