@@ -1,6 +1,6 @@
 [package]
 name = "aws-easy-sso"
-version = "0.1.0"
+version = "0.2.0"
 description = "CLI tool to make AWS SSO more convinient."
 authors = ["Martin Sturm", "Martin Sturm <noreply@martin-sturm.cloud>"]
 edition = "2021"
