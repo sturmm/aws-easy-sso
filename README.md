@@ -10,6 +10,10 @@ The tool uses the SSO and OIDC SDK to fetch available accounts and roles for you
 
 ## Installation
 
+### Prerequisites
+
+This tool is build on top of the sso-session feature of the AWS CLI. So you need install a version that already supports this. To be sure simply update to the [latest CLI version](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html).
+
 ### Cargo: 
 ``` bash
 $ cargo install aws-easy-sso
