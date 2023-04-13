@@ -69,14 +69,20 @@ async fn main() -> Result<(), anyhow::Error> {
         .get_access_token(&sso_config.start_url)
         .await?;
 
-    let sso_accounts = account_info_provider
+    let mut sso_accounts = account_info_provider
         .get_account_list(&access_token)
         .await?;
+    
+    sso_accounts.sort();
+
     let selected_account = Select::new("Select account:", sso_accounts).prompt()?;
 
-    let roles = account_info_provider
+    let mut roles = account_info_provider
         .get_roles_for_account(&access_token, &selected_account)
         .await?;
+
+    roles.sort();
+
     let selected_role = Select::new("Select role:", roles).prompt()?;
 
     let profile_name = aws_config_service.create_or_update_profile(

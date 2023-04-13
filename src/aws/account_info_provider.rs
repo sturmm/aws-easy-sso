@@ -4,7 +4,7 @@ use std::fmt::Display;
 use serde::{ Deserialize, Serialize };
 use super::AccessToken;
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, PartialEq, Eq, PartialOrd, Ord)]
 pub struct AccountInfo {
     pub account_name: String,
     pub account_id: String,
