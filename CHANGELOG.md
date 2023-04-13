@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.3.1] - 2023-04-13
+
+### Bug Fixes
+
+- Remove exit of sourced script
+
+### Release
+
+- Bump up version
+
 ## [0.3.0] - 2023-04-13
 
 ### Bug Fixes
