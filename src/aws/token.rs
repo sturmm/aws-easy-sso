@@ -1,4 +1,4 @@
-use std::{path::Path};
+use std::{path::Path, fs};
 use crate::utils::serde::json_date_format;
 use anyhow::{Result, anyhow};
 use aws_config::SdkConfig;
@@ -51,15 +51,19 @@ impl SsoAccessTokenProvider {
     const DEVICE_GRANT_TYPE: &str = "urn:ietf:params:oauth:grant-type:device_code";
     const REFRESH_GRANT_TYPE: &str = "refresh_token";
 
-    pub fn new(config: &SdkConfig, sso_session_name: &str, config_dir: &Path) -> Self {
-        Self {
+    pub fn new(config: &SdkConfig, sso_session_name: &str, config_dir: &Path) -> anyhow::Result<Self> {
+        let sso_cache_dir = config_dir.join("sso").join("cache");
+        if !sso_cache_dir.exists() {
+            fs::create_dir_all(&sso_cache_dir)?;
+        }
+        Ok(Self {
             sso_session_name: String::from(sso_session_name),
             client: Client::new(config),
             cache: super::AccessTokenCache::new(
                 sso_session_name,
-                config_dir.join("sso").join("cache").as_path(),
+                sso_cache_dir.as_path(),
             ),
-        }
+        })
     }
 
     pub async fn get_access_token(&self, start_url: &str) -> Result<AccessToken> {
@@ -130,7 +134,6 @@ impl SsoAccessTokenProvider {
 
             match token_response {
                 Ok(out) => {
-                    print!("{}", &out.refresh_token().unwrap());
                     let access_token = out.access_token().unwrap();
                     let refresh_token = out.refresh_token().unwrap();
                     let expires_at = Utc::now() + Duration::seconds(out.expires_in() as i64);

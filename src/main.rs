@@ -63,7 +63,7 @@ async fn main() -> Result<(), anyhow::Error> {
 
     let session_name = session_name(&sso_config.start_url.as_str());
     let token_provider =
-        SsoAccessTokenProvider::new(&config, session_name.as_str(), &aws_config_dir);
+        SsoAccessTokenProvider::new(&config, session_name.as_str(), &aws_config_dir)?;
 
     let access_token = token_provider
         .get_access_token(&sso_config.start_url)
