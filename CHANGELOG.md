@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.3.2] - 2023-04-14
+
+### Bug Fixes
+
+- Wrong aws config section name
+
+### Release
+
+- Bump up version
+
 ## [0.3.1] - 2023-04-13
 
 ### Bug Fixes
