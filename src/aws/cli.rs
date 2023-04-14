@@ -21,7 +21,7 @@ impl AwsCliConfigService {
         session_name: &str,
         sso_region: &str,
     ) -> Result<String> { 
-        let session_section_name = format!("easy-sso-session {}", &session_name);
+        let session_section_name = format!("sso-session {}", &session_name);
         let profile_name = format!("{session_name}:{role_name}@{account_name}");
         let profile_section_name = format!("profile {}", &profile_name);
         let mut config = Ini::load_from_file(&self.config_file)?;
