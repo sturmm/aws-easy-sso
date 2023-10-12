@@ -1,4 +1,4 @@
-use std::{path::Path, fs};
+use std::{path::Path, fs, io::Write};
 use crate::utils::serde::json_date_format;
 use anyhow::{Result, anyhow};
 use aws_config::SdkConfig;
@@ -47,9 +47,9 @@ pub struct SsoAccessTokenProvider {
 }
 
 impl SsoAccessTokenProvider {
-    const CLIENT_NAME: &str = "aws-easy-sso";
-    const DEVICE_GRANT_TYPE: &str = "urn:ietf:params:oauth:grant-type:device_code";
-    const REFRESH_GRANT_TYPE: &str = "refresh_token";
+    const CLIENT_NAME: &'static str = "aws-easy-sso";
+    const DEVICE_GRANT_TYPE: &'static str = "urn:ietf:params:oauth:grant-type:device_code";
+    const REFRESH_GRANT_TYPE: &'static str = "refresh_token";
 
     pub fn new(config: &SdkConfig, sso_session_name: &str, config_dir: &Path) -> anyhow::Result<Self> {
         let sso_cache_dir = config_dir.join("sso").join("cache");

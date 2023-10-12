@@ -1,3 +1,4 @@
+use std::fs::File;
 use anyhow::Result;
 use ini::Ini;
 use std::path::{Path, PathBuf};
@@ -24,6 +25,11 @@ impl AwsCliConfigService {
         let session_section_name = format!("sso-session {}", &session_name);
         let profile_name = format!("{session_name}:{role_name}@{account_name}");
         let profile_section_name = format!("profile {}", &profile_name);
+
+        if !&self.config_file.exists() {
+            File::create(&self.config_file)?;
+        }
+
         let mut config = Ini::load_from_file(&self.config_file)?;
 
         config.set_to(Some(&session_section_name), String::from("sso_region") , String::from(sso_region));
