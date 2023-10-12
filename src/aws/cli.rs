@@ -26,7 +26,7 @@ impl AwsCliConfigService {
         let profile_name = format!("{session_name}:{role_name}@{account_name}");
         let profile_section_name = format!("profile {}", &profile_name);
 
-        if !&self.config_file.exists() {
+        if !&self.config_file.try_exists()? {
             File::create(&self.config_file)?;
         }
 

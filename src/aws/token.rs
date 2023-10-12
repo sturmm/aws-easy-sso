@@ -120,6 +120,8 @@ impl SsoAccessTokenProvider {
 
         open::that(auth_response.verification_uri_complete().unwrap())?;
 
+        println!("\nVerify authorization code: \x1B[36;1m{}\x1B[0m", &auth_response.user_code().unwrap());
+
         let interval = auth_response.interval();
         loop {
             let token_response = self
@@ -146,6 +148,10 @@ impl SsoAccessTokenProvider {
                         device_client,
                         refresh_token: String::from(refresh_token),
                     };
+
+                    print!("\x1B[1A");
+                    print!("\x1B[2K");
+                    std::io::stdout().flush().unwrap();
 
                     break Ok(self.cache.cache_token(access_token)?);
                 }
