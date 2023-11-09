@@ -23,7 +23,7 @@ impl AwsCliConfigService {
         sso_region: &str,
     ) -> Result<String> { 
         let session_section_name = format!("sso-session {}", &session_name);
-        let profile_name = format!("{session_name}:{role_name}@{account_name}");
+        let profile_name = format!("{session_name}_{role_name}_{account_name}");
         let profile_section_name = format!("profile {}", &profile_name);
 
         if !&self.config_file.try_exists()? {
