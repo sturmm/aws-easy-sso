@@ -141,7 +141,7 @@ impl SsoAccessTokenProvider {
                     let expires_at = Utc::now() + Duration::seconds(out.expires_in() as i64);
 
                     let access_token = AccessToken {
-                        region: String::from(self.client.conf().region().unwrap().to_string()),
+                        region: String::from(self.client.config().region().unwrap().to_string()),
                         start_url: String::from(start_url),
                         access_token: String::from(access_token),
                         expires_at,
@@ -185,7 +185,7 @@ impl SsoAccessTokenProvider {
         let expires_at = Utc::now() + Duration::seconds(response.expires_in() as i64);
 
         let new_access_token = AccessToken {
-            region: String::from(self.client.conf().region().unwrap().to_string()),
+            region: String::from(self.client.config().region().unwrap().to_string()),
             start_url: cached_token.start_url.clone(),
             access_token: String::from(access_token),
             expires_at,

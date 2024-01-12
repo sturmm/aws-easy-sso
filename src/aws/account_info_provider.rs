@@ -33,7 +33,7 @@ impl AccountInfoProvider {
             .max_results(300)
             .send().await?;
     
-        let account_infos = list_accounts.account_list().unwrap().iter()
+        let account_infos = list_accounts.account_list().iter()
             .map(|account| {
                 AccountInfo {
                     account_id: String::from(account.account_id().unwrap()),
@@ -53,7 +53,7 @@ impl AccountInfoProvider {
             .send().await?;
     
         Ok(
-            account_roles.role_list().unwrap().iter()
+            account_roles.role_list().iter()
                 .map(|r| r.role_name().unwrap() )
                 .map(String::from)
                 .collect::<Vec<_>>()

@@ -28,11 +28,12 @@ impl AccessTokenCache {
     } 
     
     fn hash_key(&self) -> String {
-        use crypto::{sha1::Sha1, digest::Digest};
+        use sha1::{Sha1, Digest};
+
         let mut hasher = Sha1::new();
-        hasher.input_str(self.sso_session_name.as_str());
+        hasher.update(self.sso_session_name.as_str());
     
-        hasher.result_str()
+        format!("{:02x}", hasher.finalize())
     }
 }
 

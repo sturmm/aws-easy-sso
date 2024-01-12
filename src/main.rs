@@ -8,6 +8,7 @@ use inquire::{Select, Text};
 use script_writer::write_script;
 use std::path::{PathBuf, Path};
 use std::{fs, env};
+use aws_sdk_ssooidc::config::BehaviorVersion;
 
 pub mod aws;
 pub mod config;
@@ -57,6 +58,7 @@ async fn main() -> Result<(), anyhow::Error> {
 
     let config = aws_config::SdkConfig::builder()
         .region(Region::new(sso_config.region.clone()))
+        .behavior_version(BehaviorVersion::latest())
         .build();
     let aws_config_service = AwsCliConfigService::new(&aws_config_file);
     let account_info_provider = AccountInfoProvider::new(&config);
