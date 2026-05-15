@@ -7,7 +7,7 @@ edition = "2021"
 license = "GPL-3.0-only"
 homepage = "https://github.com/sturmm/aws-easy-sso"
 repository = "https://github.com/sturmm/aws-easy-sso"
-keywords = ["aws", "sso", "cli"]
+keywords = ["sso", "cli"]
 categories = ["command-line-utilities", "aws"]
 
 [[bin]]
