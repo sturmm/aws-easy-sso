@@ -1,6 +1,6 @@
 [package]
 name = "aws-easy-sso"
-version = "0.6.1"
+version = "0.6.2"
 description = "CLI tool to make AWS SSO more convenient."
 authors = ["Martin Sturm", "Martin Sturm <noreply@martin-sturm.cloud>"]
 edition = "2021"
@@ -17,15 +17,15 @@ path = "src/main.rs"
 [dependencies]
 anyhow = "^1.0.79"
 aws-config = { version = "1.1.2", features = ["behavior-version-latest"] }
-aws-sdk-sso = "^1.10.0"
-aws-sdk-ssooidc = "^1.10.0"
+aws-sdk-sso = "^1.84.0"
+aws-sdk-ssooidc = "^1.85.0"
 aws-types = "1.1.2"
 chrono = "0.4.31"
 clap = { version = "4.4.16", features = ["derive", "env"] }
-directories = "5.0.1"
-inquire = "^0.6.2"
+directories = "6.0.0"
+inquire = "^0.7.5"
 open = "5.0.1"
-rust-ini = "0.20.0"
+rust-ini = "0.21.3"
 serde = { version = "1.0.195",  features = ["derive"] }
 serde_json = "1.0.111"
 sha1 = "0.10.6"

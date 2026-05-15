@@ -13,7 +13,7 @@
 /// }
 /// ```
 pub mod json_date_format {
-    use chrono::{DateTime, Utc, TimeZone};
+    use chrono::{DateTime, Utc};
     use serde::{self, Deserialize, Serializer, Deserializer};
 
     const FORMAT: &'static str = "%Y-%m-%dT%H:%M:%SZ";
@@ -36,7 +36,9 @@ pub mod json_date_format {
         D: Deserializer<'de>,
     {
         let s = String::deserialize(deserializer)?;
-        Utc.datetime_from_str(&s, FORMAT).map_err(serde::de::Error::custom)
+        DateTime::parse_from_str(&s, FORMAT)
+            .map(|dt| dt.with_timezone(&Utc)) 
+            .map_err(serde::de::Error::custom)
     }
     
 }

@@ -30,10 +30,14 @@ impl AccountInfoProvider {
     pub async fn get_account_list(&self, access_token: &AccessToken) -> Result<Vec<AccountInfo>> {
         let list_accounts = self.client.list_accounts()
             .access_token(access_token.access_token.as_str())
-            .max_results(300)
-            .send().await?;
+            .max_results(100)
+            .into_paginator()
+            .send()
+            .try_collect()
+            .await?
+            .into_iter().flat_map(|page| { page.account_list.unwrap_or_default() });
     
-        let account_infos = list_accounts.account_list().iter()
+        let account_infos = list_accounts
             .map(|account| {
                 AccountInfo {
                     account_id: String::from(account.account_id().unwrap()),
@@ -49,7 +53,7 @@ impl AccountInfoProvider {
         let account_roles = self.client.list_account_roles()
             .access_token(access_token.access_token.as_str())
             .account_id(account_info.account_id.as_str())
-            .max_results(10)
+            .max_results(20)
             .send().await?;
     
         Ok(
